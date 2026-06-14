@@ -21,7 +21,7 @@ from fixtures import (
 )
 
 
-@pytest.mark.skip_profile("apache_spark", "spark_session")
+@pytest.mark.skip_profile("apache_spark", "spark_session", "spark_connect")
 class TestPersistDocsDeltaTable:
     @pytest.fixture(scope="class")
     def models(self):
@@ -84,7 +84,7 @@ class TestPersistDocsDeltaTable:
                     assert result[2].startswith("Some stuff here and then a call to")
 
 
-@pytest.mark.skip_profile("apache_spark", "spark_session")
+@pytest.mark.skip_profile("apache_spark", "spark_session", "spark_connect")
 class TestPersistDocsDeltaView:
     @pytest.fixture(scope="class")
     def models(self):
@@ -126,7 +126,7 @@ class TestPersistDocsDeltaView:
                 assert result[2] is None
 
 
-@pytest.mark.skip_profile("apache_spark", "spark_session")
+@pytest.mark.skip_profile("apache_spark", "spark_session", "spark_connect")
 class TestPersistDocsMissingColumn:
     @pytest.fixture(scope="class")
     def project_config_update(self):
@@ -168,7 +168,7 @@ class TestPersistDocsMissingColumn:
         )
 
 
-@pytest.mark.skip_profile("apache_spark", "spark_session")
+@pytest.mark.skip_profile("apache_spark", "spark_session", "spark_connect")
 class TestPersistDocsAllColumnsMissing(BasePersistDocsAllColumnsMissing):
     pass
 

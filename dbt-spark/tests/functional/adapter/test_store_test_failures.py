@@ -37,7 +37,11 @@ class TestSparkStoreTestFailures(StoreTestFailuresBase):
 
 
 @pytest.mark.skip_profile(
-    "apache_spark", "spark_session", "databricks_sql_endpoint", "spark_http_odbc"
+    "apache_spark",
+    "spark_session",
+    "databricks_sql_endpoint",
+    "spark_http_odbc",
+    "spark_connect",
 )
 class TestSparkStoreTestFailuresWithDelta(StoreTestFailuresBase):
     @pytest.fixture(scope="class")
@@ -86,7 +90,8 @@ class TestStoreTestFailuresAsProjectLevelView(basic.StoreTestFailuresAsProjectLe
     pass
 
 
-@pytest.mark.skip_profile("spark_session")
+# spark connect fails because of issue [ADAP-931]
+@pytest.mark.skip_profile("spark_session", "spark_connect")
 class TestStoreTestFailuresAsGeneric(basic.StoreTestFailuresAsGeneric):
     pass
 

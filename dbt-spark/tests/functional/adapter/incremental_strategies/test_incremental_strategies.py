@@ -55,7 +55,11 @@ class TestDefaultAppend(BaseIncrementalStrategies):
         check_relations_equal(project.adapter, ["default_append", "expected_append"])
 
     @pytest.mark.skip_profile(
-        "databricks_http_cluster", "databricks_sql_endpoint", "spark_session", "spark_http_odbc"
+        "databricks_http_cluster",
+        "databricks_sql_endpoint",
+        "spark_session",
+        "spark_http_odbc",
+        "spark_connect",
     )
     def test_default_append(self, project):
         self.run_and_test(project)
@@ -108,6 +112,7 @@ class TestDeltaStrategies(BaseIncrementalStrategies):
         "databricks_sql_endpoint",
         "spark_session",
         "spark_http_odbc",
+        "spark_connect",
     )
     def test_delta_strategies(self, project):
         self.run_and_test(project)

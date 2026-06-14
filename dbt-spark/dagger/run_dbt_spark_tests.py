@@ -90,6 +90,29 @@ def get_spark_container(client: dagger.Client) -> Tuple[dagger.Service, str]:
     return spark_ctr, "spark_db"
 
 
+def get_spark_connect_container(client: dagger.Client) -> (dagger.Container, str):
+    spark_ctr_base = (
+        client.container()
+        .from_("spark:4.1.2-scala2.13-java21-ubuntu")
+        .with_exec(
+            [
+                "/opt/spark/bin/spark-submit",
+                "--class",
+                "org.apache.spark.sql.connect.service.SparkConnectServer",
+                "--conf",
+                "spark.sql.catalogImplementation=hive",
+                "--packages",
+                "org.apache.spark:spark-connect_2.13:4.1.2",
+                "--conf",
+                "spark.jars.ivy=/tmp",
+            ]
+        )
+        .with_exposed_port(15002)
+        .as_service()
+    )
+    return spark_ctr_base, "localhost"
+
+
 async def test_spark(test_args):
     async with dagger.Connection(dagger.Config(log_output=sys.stderr)) as client:
 
@@ -151,6 +174,11 @@ async def test_spark(test_args):
             )
 
         elif test_args.profile == "spark_session":
+            tst_container = tst_container.with_exec(["./scripts/install_jdk.sh"])
+
+        elif test_args.profile == "spark_connect":
+            spark_ctr, spark_host = get_spark_connect_container(client)
+            tst_container = tst_container.with_service_binding(alias=spark_host, service=spark_ctr)
             tst_container = tst_container.with_exec(["./scripts/install_jdk.sh"])
 
         # run the tests

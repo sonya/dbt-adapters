@@ -40,6 +40,7 @@ select 1 as id
     "databricks_sql_endpoint",
     "databricks_http_cluster",
     "spark_session",
+    "spark_connect",
 )
 class TestQueryTimeout:
     """Test query timeout functionality.

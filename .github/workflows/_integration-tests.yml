@@ -476,6 +476,7 @@ jobs:
                     - "databricks_sql_endpoint"
                     - "databricks_cluster"
                     - "databricks_http_cluster"
+                    - "spark_connect"
         steps:
             - name: "Checkout ${{ inputs.branch }}"
               uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # actions/checkout@v4

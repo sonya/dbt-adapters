@@ -65,6 +65,7 @@ class TestArrayConstruct(BaseArrayConstruct):
     pass
 
 
+@pytest.mark.skip_profile("spark_connect")
 class TestBoolOr(BaseBoolOr):
     pass
 
@@ -91,16 +92,18 @@ class TestDate(BaseDate):
     pass
 
 
+@pytest.mark.skip_profile("spark_connect")
 class TestDateAdd(BaseDateAdd):
     pass
 
 
 # this generates too much SQL to run successfully in our testing environments :(
-@pytest.mark.skip_profile("apache_spark", "spark_session")
+@pytest.mark.skip_profile("apache_spark", "spark_session", "spark_connect")
 class TestDateDiff(BaseDateDiff):
     pass
 
 
+@pytest.mark.skip_profile("spark_connect")
 class TestDateTrunc(BaseDateTrunc):
     pass
 
@@ -154,12 +157,12 @@ class TestPosition(BasePosition):
     pass
 
 
-@pytest.mark.skip_profile("spark_session")
+@pytest.mark.skip_profile("spark_session", "spark_connect")
 class TestReplace(BaseReplace):
     pass
 
 
-@pytest.mark.skip_profile("spark_session")
+@pytest.mark.skip_profile("spark_session", "spark_connect")
 class TestRight(BaseRight):
     pass
 

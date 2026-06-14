@@ -13,6 +13,7 @@ def dbt_profile_target(request):
         "databricks_cluster": databricks_cluster_target,
         "databricks_http_cluster": databricks_http_cluster_target,
         "databricks_sql_endpoint": databricks_sql_endpoint_target,
+        "spark_connect": spark_connect_target,
     }
 
     profile = request.config.getoption("--profile")
@@ -112,4 +113,13 @@ def spark_http_odbc_target():
         "connect_retries": 3,
         "connect_timeout": 5,
         "retry_all": True,
+    }
+
+
+def spark_connect_target():
+    return {
+        "type": "spark",
+        "host": "localhost",
+        "method": "connect",
+        "port": 15002,
     }

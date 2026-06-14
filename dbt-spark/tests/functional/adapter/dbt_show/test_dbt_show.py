@@ -15,7 +15,9 @@ class TestSparkShowSqlHeader(BaseShowSqlHeader):
     pass
 
 
-@pytest.mark.skip_profile("apache_spark", "spark_session", "databricks_http_cluster")
+@pytest.mark.skip_profile(
+    "apache_spark", "spark_session", "databricks_http_cluster", "spark_connect"
+)
 class TestSparkShowDoesNotHandleDoubleLimit(BaseShowDoesNotHandleDoubleLimit):
     """The syntax message is quite variable across clusters, but this hits two at once."""
 
