@@ -99,6 +99,7 @@ class SparkCredentials(Credentials):
     kerberos_service_name: Optional[str] = None
     organization: str = "0"
     connection_string_suffix: Optional[str] = None
+    credential_type: Optional[str] = None
     connect_retries: int = 0
     connect_timeout: int = 10
     use_ssl: bool = False
@@ -657,11 +658,17 @@ class SparkConnectionManager(SQLConnectionManager):
                     token = creds.token
                     use_ssl = creds.use_ssl
                     user = creds.user
+                    credential_type = creds.credential_type
 
                     # URL Format: sc://localhost:15002/;user_id=str;token=str;use_ssl=bool
                     if not host.startswith("sc://"):
                         base_url = f"sc://{host}"
                     base_url += f":{str(port)}"
+
+                    if not credential_type:
+                        credential_type = "token"
+                    if credential_type not in ("token", "x-aws-proxy-auth"):
+                        raise ValueError("credential_type must be one of: token, x-aws-proxy-auth")
 
                     url_extensions = []
                     if user:
@@ -669,7 +676,7 @@ class SparkConnectionManager(SQLConnectionManager):
                     if use_ssl:
                         url_extensions.append(f"use_ssl={use_ssl}")
                     if token:
-                        url_extensions.append(f"token={token}")
+                        url_extensions.append(f"{credential_type}={token}")
 
                     conn_url = base_url + "/;" + ";".join(url_extensions)
 
